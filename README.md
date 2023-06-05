@@ -3,17 +3,17 @@
 With this project i tried to do a POC for the zero shot sentiment analysis (inference) using the libraries avaialble in Rust. I made use of 2 libraries each having their own way of ranking a sentence having a certain sentiment.
 The tests were done using a cli tool built using clap. This provided a quick and easy way of prototyping and trying out different things quickly. Here only 1 sentence can be passed at runtime to the cli input option and the relevant sentiment is displayed. Below i detail the pros and cons of both of the libraries tested.
 
-### To format:
+#### To format:
 ```bash
 make format
 ``` 
 
-### To lint:
+#### To lint:
 ```bash
 make lint
 ```
 
-### To run:
+#### To run:
 ```bash
 cargo run infer --input <sentence>
 ```
@@ -25,11 +25,11 @@ My original idea for this project was to use a pretrained model-> fine tune it i
 Here i have used the Sentiment pipeline and the Sentiment model provided by the same.
 
 
-### Sample Output:
+#### Sample Output:
 ![image](https://github.com/NehaBardeDUKE/AIPI_561_Individual_Project_1/assets/110474064/ef4e46a7-e53e-4b47-812d-1939e3133ca4)
 ![image](https://github.com/NehaBardeDUKE/AIPI_561_Individual_Project_1/assets/110474064/bdfd6d82-5c31-4f58-90d5-ba03a40161e7)
 
-### My take:
+#### My take:
 This model provides a polarity score for the sentiment which provides a bit of interpretability wrt to the sentiment of the given sentence.
 The actual zero shot sentiment analysis is fairly decent for sentences with triple or double negatives, extremely positive or extremely negative words but if you just pass sentences like "How r u" , it tends to classify this as either positive or negative with a high polarity score. Ideally the polarity score should be low irrespective of how this is classified (signifying neutral sentiment if any).
 Another thing that was a bit difficult to navigate (especially since i am still learning Rust) was that the sentiment model only took an array of sentences and not a single sentence. I had to come up with a way to handle this but that kind of flexibility to inut any number of sentences would be very welcome.
@@ -40,12 +40,12 @@ This is a toolkit created for Rust using the python nltk toolkit. It claims to p
 Here i used the "sentiment" model which takes as an input just 1 sentence and the language that the model will be using. 
 
 
-### Sample Output:
+#### Sample Output:
 ![image](https://github.com/NehaBardeDUKE/AIPI_561_Individual_Project_1/assets/110474064/d2060858-a0db-4f6f-a267-48349a85c917)
 ![image](https://github.com/NehaBardeDUKE/AIPI_561_Individual_Project_1/assets/110474064/bb7d04b4-5ebf-4c31-9da4-b0746e15ca18)
 
 
-### My take:
+#### My take:
 The model output is not interpretable or explainable at all. I tried to find what the said class output actually means but i couldnt find that documentation anywhere. From just putting in random sentences i think class 0 means negative sentiment, 1 means neutral sentiment and 2 means positive sentiment. However again there are no polarity scores or probability of the class provided so it is not the most reliable model where you would want to explain the results. Additionally the documentation doesnt specify what is the return type of the result, so it can be a bit tricky to figure out how you want to display the same.
 This model however was very easy to implement and could easily be assimilated into my current code without having to change a lot of things.
 However, it requires you to install some packages beforehand using python and i personally wouldnt want to do that if i am planning on using Rust end to end.
