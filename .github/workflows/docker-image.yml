@@ -1,18 +1,28 @@
-name: Docker Image CI
+name: Dockerfile build after any change
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    
+    - name: Build the container image
+      run: docker build -t onnx_pytorch_mod .
+    
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+    - name: Tag the Docker image
+      run: docker tag onnx_pytorch_mod nehabardeduke/onnx_pytorch_mod:latest
+    
+    - name: Push the Docker image to Docker Hub
+      run: docker push nehabardeduke/onnx_pytorch_mod:latest
