@@ -50,6 +50,17 @@ The model output is not interpretable or explainable at all. I tried to find wha
 This model however was very easy to implement and could easily be assimilated into my current code without having to change a lot of things.
 However, it requires you to install some packages beforehand using python and i personally wouldnt want to do that if i am planning on using Rust end to end.
 
+## Github actions:
+
+Created a workflow that rebuilds the image after every pull request. The workflow builds the image using the docker file, then logs into my docker hub account to post the repo publically to the docker hub.
+
+```bash
+docker pull nehabardeduke/onnx_pytorch_mod:latest
+```
+```bash
+docker --rm -it onnx_pytorch_mod infer --input <sentence for sentiment analysis>
+```
+
 ## Future enhancements:
 
 1. The original code i wrote for Rust-Bert sentiment model was using the rust-bert pipeline version 0.20.0 but on the 3rd of June 2023, they upgraded the rust-bert pipeline to the next version 0.21.0 which causes a lot of issues with the torch-sys dependencies. There is a lot of manual workaround for this. As a continuation of the work done here, i will try to automate those manual steps so that someone will be able to simply pull the project and integrate it in their work.
